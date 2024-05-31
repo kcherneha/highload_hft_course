@@ -31,57 +31,33 @@
    - Ensures efficient routing and minimizes latency.
    - **Technology**: Kafka, RabbitMQ
 
-5. **Market Data Feed Handlers**
-   - **Purpose**: Interfaces with various market data sources to ingest real-time data.
-   - **Technology**: FIX protocol, proprietary APIs
-
-6. **Pricing and Analytics Engine**
-   - **Purpose**: Calculates prices and analytics based on incoming data.
-   - **Technology**: Custom C++ or Python for analytics
-
-7. **Order Matching Engine**
-   - **Active Matching Engine**: Handles real-time matching of orders.
-   - **Passive Matching Engine**: Manages orders not currently being executed.
-  
-   - **Passive Matching Engine**: Handles trades that do not require immediate execution, possibly managing limit orders.
+5. **Order Matching Engine**  
    - **Active Matching Engine**: Executes trades that require immediate action, handling market orders and high-priority trades.
    - Coordinated with Zookeeper for distributed system coordination and management.
    - **Technology**: Custom C++ implementation
 
-8. **Database Systems**
+6. **Database Systems**
    - **Snapshots and Historical Data**: Stores and retrieves market data snapshots and historical data.
    - **Cassandra**: NoSQL database used for storing large volumes of structured data, such as market snapshots.
    - **Primary Data Server TICK Calculator**: Processes and calculates TICK data, which is essential for tracking the number of price changes in a particular asset.
    - **Technology**: Cassandra, Time Series Databases
 
-9. **Cache Systems**
+7. **Cache Systems**
    - **Purpose**: Provides quick access to frequently used data to minimize latency.
    - **Technology**: Redis, Memcached
 
-10. **Message Queue Systems**
+8. **Message Queue Systems**
     - **Purpose**: Ensures reliable communication between asynchronous components.
     - **Technology**: Kafka, RabbitMQ
 
-11. **POP (Point of Presence) Servers/Broadcast Servers**
+9. **POP (Point of Presence) Servers/Broadcast Servers**
     - **Purpose**: Distributes market data to various end-users and systems.
     - **Technology**: Custom implementations, likely using high-performance networking libraries
 
-12. **Fraud Detection and Stream Processing**
+10. **Fraud Detection and Stream Processing**
     - **Purpose**: Monitors and processes real-time data streams to detect fraudulent activities.
     - **Technology**: Apache Flink, Apache Storm
 
-13. **User Interface and APIs**
-    - **Purpose**: Provides interfaces for users to interact with the trading system.
-    - **Technology**: React, Angular for UI; RESTful APIs for backend interaction
-
-14. **Payment and Settlement Systems**
-    - **Purpose**: Handles the financial transactions and settlements post-trade.
-    - **Technology**: RDBMS like PostgreSQL, MySQL
-   
-
-
-15?. **CDN (Content Delivery Network)**
-   - Distributes data globally to minimize latency and enhance the speed of data delivery to users.
 
 
 ### Data Flow and Interactions
