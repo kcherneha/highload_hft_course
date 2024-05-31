@@ -1,0 +1,70 @@
+@startuml
+allowmixing
+
+actor "Users" as USERS
+actor "HFT Systems" as HFT_SYSTEMS
+
+package "HFT Market Maker System" {
+    
+    rectangle "API and Sequencing" {
+        component "API Gateway / Load Balancer" as API_GATEWAY
+        component "Accumulator Sequencer" as SEQUENCER
+    }
+    
+    rectangle "Risk and Routing" {
+        component "Risk Management System" as RISK_MANAGEMENT
+        artifact "Router" as ROUTER_1
+        artifact "Router" as ROUTER_2
+    }
+
+    rectangle "Matching Engines" {
+        node "Passive Matching Engine" as PASSIVE_MATCH_ENGINE
+        node "Active Matching Engine" as ACTIVE_MATCH_ENGINE
+    }
+
+    rectangle "Data Handling" {
+        collections "Market Data Feed Handlers" as DATA_FEED_HANDLERS
+        collections "Pricing and Analytics Engine" as PRICING_ENGINE
+    }
+    
+    rectangle "Storage Systems" {
+        database "Snapshots (Cassandra)" as CASSANDRA
+        database "Historical Data (Time Series DB)" as TIME_SERIES_DB
+    }
+
+    rectangle "Infrastructure" {
+        cloud "Cache (Redis)" as CACHE
+        queue "Message Queue (Kafka)" as MESSAGE_QUEUE
+    }
+    
+    rectangle "Broadcast and Processing" {
+        collections "POP Servers / Broadcast Servers" as POP_SERVERS
+        collections "Fraud Detection and Stream Processing" as FRAUD_DETECTION
+    }
+    
+    component "User Interface and APIs" as UI_APIS
+    database "Payment and Settlement Systems" as PAYMENT_SYSTEM
+}
+
+' Connections
+USERS --> API_GATEWAY : Request
+HFT_SYSTEMS --> API_GATEWAY : Request
+API_GATEWAY --> SEQUENCER : Forward Request
+SEQUENCER --> RISK_MANAGEMENT : Forward Request
+RISK_MANAGEMENT --> ROUTER_1 : Valid Orders
+ROUTER_1 --> PASSIVE_MATCH_ENGINE : Route Orders
+ROUTER_1 --> ACTIVE_MATCH_ENGINE : Route Orders
+PASSIVE_MATCH_ENGINE --> ACTIVE_MATCH_ENGINE : Order Matches
+ACTIVE_MATCH_ENGINE --> CASSANDRA : Store Snapshots
+ACTIVE_MATCH_ENGINE --> TIME_SERIES_DB : Store Historical Data
+ACTIVE_MATCH_ENGINE --> ROUTER_2 : Match Results
+ROUTER_2 --> CACHE : Update Cache
+ROUTER_2 --> MESSAGE_QUEUE : Publish Messages
+MESSAGE_QUEUE --> FRAUD_DETECTION : Monitor Messages
+ROUTER_2 --> POP_SERVERS : Broadcast Data
+POP_SERVERS --> USERS : Distribute Data
+API_GATEWAY --> UI_APIS : Provide Interface
+UI_APIS --> PAYMENT_SYSTEM : Handle Payments
+FRAUD_DETECTION --> TIME_SERIES_DB : Log Data
+
+@enduml
