@@ -1,3 +1,6 @@
+![Alt text](https://github.com/kcherneha/highload_hft_course/blob/main/hft_market_maker_simple_diagram.png)
+
+
 ### High-Frequency Trading (HFT) Market Maker Component
 
 #### Requirements Overview
