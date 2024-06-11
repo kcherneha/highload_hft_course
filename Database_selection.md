@@ -8,25 +8,19 @@
 
 #### Key Purpose:
 
-The primary purpose is to store real-time snapshots of the market data, which includes the state of order books, trades, and other relevant financial information. Functions:
+To store real-time snapshots of the market data, including the state of order books, trades, and other financial information. Details:
 
 1. **Real-Time Market State Storage**:
-   - The snapshots database captures the current state of the market at any given moment, including the latest bid and ask prices, trade volumes, and the order book depth.
+   - The snapshots database captures the current state of the market at any given moment, including the latest prices, trade volumes, and the order book depth.
 
 2. **High Write Throughput**:
-   - In an HFT environment, data about trades and order book changes is generated at a very high rate. Cassandra's ability to handle high write throughput makes it suitable for storing this continuously updating data efficiently.
+   - In an HFT environment, data about trades and order book changes is generated at a very high rate.
 
-3. **Historical Data Reference**:
-   - Although primarily used for real-time data, the snapshots database can also help in referencing recent historical data for short-term analysis and decision-making.
-
-4. **Disaster Recovery and Fault Tolerance**:
+3. **Disaster Recovery and Fault Tolerance**:
    - By capturing the state of the market at frequent intervals, the snapshots database aids in quick recovery in case of system failures. Cassandra’s replication features ensure that data is available even if some nodes fail.
 
-5. **Data Analysis and Backtesting**:
+4. **Data Analysis and Backtesting**:
    - Snapshots of market data can be used to backtest trading algorithms against recent market conditions. This helps in refining strategies based on near-real-time historical data.
-
-6. **Synchronization and Coordination**:
-   - The database ensures that all components of the HFT system, including matching engines and risk management modules, have access to consistent and synchronized market state data.
 
 #### Justification for Choosing Cassandra:
 
@@ -35,7 +29,7 @@ The primary purpose is to store real-time snapshots of the market data, which in
 - **Write Optimization**: The database is optimized for high-speed write operations, aligning with the need to frequently update the market state.
 
 
-### 2. Historical Data (Time Series DB or again Cassandra - see p.5)
+### 2. Historical Data (Time Series DB or again Cassandra - see p.4)
 #### Requirements:
 - **Time-Based Data**: Efficient storage and retrieval of time-series data.
 - **High Insertion Rate**: Capable of handling a high rate of incoming data points.
